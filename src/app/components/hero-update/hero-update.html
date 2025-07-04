@@ -1,0 +1,33 @@
+<h1>Edicion de heroe</h1>
+<hr>
+<form class="hero-form" [formGroup]="heroForm" (ngSubmit)="updateHero()">
+  <div class="hero-form-fields">
+    <mat-form-field>
+      <mat-label>Nombre del heroe</mat-label>
+      <input matInput formControlName="name">
+      @if(getfieldError('name')) {
+      <mat-error>{{getfieldError('name')}}</mat-error>
+      }
+    </mat-form-field>
+  </div>
+  <div class="hero-form-fields">
+    <mat-form-field>
+      <mat-label>Habilidad del heroe</mat-label>
+      <input matInput formControlName="power">
+      @if(getfieldError('power')) {
+      <mat-error>{{getfieldError('power')}}</mat-error>
+      }
+    </mat-form-field>
+  </div>
+  <div class="hero-form-fields">
+    <mat-form-field>
+      <mat-label>Ciudad</mat-label>
+      <input matInput formControlName="city">
+      @if(getfieldError('city')) {
+      <mat-error>{{getfieldError('city')}}</mat-error>
+      }
+    </mat-form-field>
+  </div>
+</form>
+
+<button matButton="filled" (click)="updateHero()">Actualizar</button>

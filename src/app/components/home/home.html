@@ -1,0 +1,8 @@
+<form [formGroup]="inputForm">
+    <mat-form-field class="example-full-width">
+        <mat-label>Busqueda de Heroe</mat-label>
+        <input matInput placeholder="Heroe" formControlName="inputSearch" [value]="inputForm.controls['inputSearch'].value  | titlecase" (keyup.enter)="searchHero()">
+    </mat-form-field>
+</form>
+
+<app-table/>

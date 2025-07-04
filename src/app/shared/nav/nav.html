@@ -1,0 +1,10 @@
+<div class="button-menu">
+  <button matButton [matMenuTriggerFor]="menu">
+    <mat-icon aria-hidden="false" aria-label="menu-icon" fontIcon="menu"></mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/']" routerLinkActive="'active'" >Inicio</button>
+    <button mat-menu-item [routerLink]="['/hero-register']">Registrar Heroe</button>
+  </mat-menu>
+</div>
+
