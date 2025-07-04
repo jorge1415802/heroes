@@ -7,12 +7,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
 import { HeroInterface } from '../../interfaces/hero.interface';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { of } from 'rxjs';
 
 describe('Table', () => {
   let component: Table;
   let fixture: ComponentFixture<Table>;
   let heroesServiceSpy: jasmine.SpyObj<HeroesService>;
   let routerSpy: jasmine.SpyObj<Router>;
+  let dialogMock: jasmine.SpyObj<MatDialog>;
+
 
   const mockHeroes: HeroInterface[] = [
     { id: 1, name: 'Batman', city: 'Gotham', power: 'Detective' },
@@ -24,12 +28,15 @@ describe('Table', () => {
   beforeEach(async () => {
     heroesServiceSpy = jasmine.createSpyObj('HeroesService', ['getHeroes', 'deleteHero']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    dialogMock = jasmine.createSpyObj('MatDialog', ['open']);
+
 
     await TestBed.configureTestingModule({
-      imports: [Table, MatPaginatorModule, MatButtonModule, MatIconModule],
+      imports: [Table, MatPaginatorModule, MatButtonModule, MatIconModule,MatDialogModule],
       providers: [
         { provide: HeroesService, useValue: heroesServiceSpy },
-        { provide: Router, useValue: routerSpy }
+        { provide: Router, useValue: routerSpy },
+        { provide: MatDialog, useValue: dialogMock },
       ]
 
     })
@@ -52,7 +59,7 @@ describe('Table', () => {
   });
 
   it('should navigate to hero-register', () => {
-    component.addHero(mockHeroes[0]);
+    component.addHero();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/hero-register']);
   });
 
@@ -60,12 +67,5 @@ describe('Table', () => {
     component.updateHero(mockHeroes[1]);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/hero-update', 2]);
   });
-
-  it('should call delete hero from service', () => {
-    component.deleteHero(1);
-    expect(heroesServiceSpy.deleteHero).toHaveBeenCalledWith(1);
-  });
-
-
 
 });

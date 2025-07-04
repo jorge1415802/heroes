@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal, viewChild, ViewChild } from '@angular/core';
+import { Component, effect, inject, signal, TemplateRef, viewChild, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { HeroesService } from '../../services/heroes.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -6,18 +6,21 @@ import { HeroInterface } from '../../interfaces/hero.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DeleteMessage } from '../../shared/delete-message/delete-message';
 
 @Component({
   selector: 'app-table',
-  imports: [MatPaginatorModule,MatTableModule,MatButtonModule,MatIconModule],
+  imports: [MatPaginatorModule,MatTableModule,MatButtonModule,MatIconModule,MatDialogModule,DeleteMessage],
   templateUrl: './table.html',
   styleUrl: './table.css'
 })
 export default class Table {
+  
   heroesService = inject(HeroesService);
   router = inject(Router);
-
+  dialog = inject(MatDialog)
+  
   data = signal<HeroInterface[]>([])
   dataSource = new MatTableDataSource<HeroInterface>([]);
   displayedColumns: string[] = ['id', 'name', 'city', 'power','add','update','delete'];
@@ -43,10 +46,15 @@ export default class Table {
   }
 
   deleteHero(id : number) {
-    this.heroesService.deleteHero(id)
+    const dialog = this.dialog.open(DeleteMessage,{
+      width: '300px',
+    });
+    dialog.afterClosed().subscribe(resp => {
+      if(resp === 'ok') this.heroesService.deleteHero(id)
+    })
   }
 
-  addHero(hero : HeroInterface) {
+  addHero() {
     this.router.navigate(['/hero-register'])
   }
 

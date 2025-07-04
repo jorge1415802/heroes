@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>¿Estas seguro de borrar el heroe?</h2>
+<mat-dialog-content>
+  <p>Si lo borras no sera posible recuperarlo</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton [mat-dialog-close]="true" cdkFocusInitial>No</button>
+  <button matButton (click)="deleteHero()">Ok</button>
+</mat-dialog-actions>

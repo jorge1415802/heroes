@@ -5,6 +5,9 @@ import type{ HeroInterface } from '../interfaces/hero.interface';
 
 @Injectable({providedIn: 'root'})
 export class HeroesService {
+    static deleteHero(deleteHero: any) {
+      throw new Error('Method not implemented.');
+    }
     private dataHero = signal<HeroInterface[]>(heroes)
     private initDataHero = signal<HeroInterface[]>(heroes)
 
