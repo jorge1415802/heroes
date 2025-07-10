@@ -3,16 +3,18 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { HeroesService } from '../../services/heroes.service';
 import { HeroInterface } from '../../interfaces/hero.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TitleCasePipe } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-hero-update',
-  imports: [MatInputModule,MatCardModule,ReactiveFormsModule,MatButtonModule],
+  imports: [MatInputModule,MatCardModule,ReactiveFormsModule,MatButtonModule,TitleCasePipe,MatGridListModule],
   templateUrl: './hero-update.html',
   styleUrl: './hero-update.css'
 })
@@ -22,6 +24,7 @@ export default class HeroUpdate {
   private route = inject(ActivatedRoute)
   private heroService = inject(HeroesService)
   private router = inject(Router)
+  private loadingService = inject(LoadingService)
 
   heroId = toSignal(this.route.paramMap.pipe(map(params => params.get('id')))) 
   hero = signal<HeroInterface>({} as HeroInterface)
@@ -36,7 +39,6 @@ export default class HeroUpdate {
   getHero = effect(() => {
     console.log(this.heroId())
     this.hero.set(this.heroService.getHeroById( Number(this.heroId()) )!)
-    // this.hero.set(this.heroService.getHeroes().find(hero => hero.id === Number(this.heroId()))!)
     this.filloutForm();
     console.log(this.hero())
     
@@ -78,6 +80,11 @@ export default class HeroUpdate {
       city : this.heroForm.get('city')!.value ?? ''
     }
     this.heroService.updateHero(hero)
+    this.loadingService.sendRequest().subscribe();
+    this.cancel();
+  }
+
+  cancel() {
     this.router.navigate(['/']);
   }
 

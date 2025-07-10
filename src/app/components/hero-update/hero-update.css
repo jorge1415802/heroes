@@ -1,4 +1,4 @@
-.hero-form {
+/* .hero-form {
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
@@ -6,4 +6,40 @@
 
 .hero-form-fields {
     margin-bottom: 0.5rem;
+} */
+
+
+.full-width {
+    width: 100%;
+}
+
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.custom-card {
+  width: 400px;
+  max-width: 90vw;
+}
+
+.custom-image {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+
+.image-width {
+    width: 91%;
+}
+
+.position-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
 }

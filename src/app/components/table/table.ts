@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal, TemplateRef, viewChild, ViewChild } from '@angular/core';
+import { Component, effect, inject, signal, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { HeroesService } from '../../services/heroes.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -8,10 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DeleteMessage } from '../../shared/delete-message/delete-message';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-table',
-  imports: [MatPaginatorModule,MatTableModule,MatButtonModule,MatIconModule,MatDialogModule,DeleteMessage],
+  imports: [MatPaginatorModule,MatTableModule,MatButtonModule,MatIconModule,MatDialogModule],
   templateUrl: './table.html',
   styleUrl: './table.css'
 })
@@ -20,10 +21,11 @@ export default class Table {
   heroesService = inject(HeroesService);
   router = inject(Router);
   dialog = inject(MatDialog)
+  private loadingService = inject(LoadingService)
   
   data = signal<HeroInterface[]>([])
   dataSource = new MatTableDataSource<HeroInterface>([]);
-  displayedColumns: string[] = ['id', 'name', 'city', 'power','add','update','delete'];
+  displayedColumns: string[] = ['id', 'name', 'city', 'power','update','delete'];
 
    @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -50,13 +52,16 @@ export default class Table {
       width: '300px',
     });
     dialog.afterClosed().subscribe(resp => {
-      if(resp === 'ok') this.heroesService.deleteHero(id)
+      if(resp === 'ok') {
+        this.heroesService.deleteHero(id)
+        this.loadingService.sendRequest().subscribe();
+      }  
     })
   }
 
-  addHero() {
-    this.router.navigate(['/hero-register'])
-  }
+  // addHero() {
+  //   this.router.navigate(['/hero-register'])
+  // }
 
   updateHero(hero : HeroInterface) {
     this.router.navigate(['/hero-update',hero.id])

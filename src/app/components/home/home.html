@@ -1,8 +1,16 @@
-<form [formGroup]="inputForm">
-    <mat-form-field class="example-full-width">
-        <mat-label>Busqueda de Heroe</mat-label>
-        <input matInput placeholder="Heroe" formControlName="inputSearch" [value]="inputForm.controls['inputSearch'].value  | titlecase" (keyup.enter)="searchHero()">
-    </mat-form-field>
-</form>
+<mat-grid-list cols="3" rowHeight="100px">
+    <form [formGroup]="inputForm">
+        <mat-grid-tile>
+            <mat-form-field class="full-width">
+                <mat-label>Busqueda de Heroe</mat-label>
+                <input matInput placeholder="Nombre del heroe" formControlName="inputSearch"
+                    [value]="inputForm.controls['inputSearch'].value  | titlecase" (keyup.enter)="searchHero()">
+            </mat-form-field>
+        </mat-grid-tile>
+    </form>
+    <mat-grid-tile>
+        <button matButton="filled" (click)="registerHero()">Registrar</button>
+    </mat-grid-tile>
+</mat-grid-list>
 
-<app-table/>
+<app-table />

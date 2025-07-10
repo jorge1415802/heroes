@@ -43,12 +43,49 @@ describe('Heroes Service', () => {
     expect(resultado?.name).toBe('Actualizado');
   });
 
+  it('should add a new hero with generated id', () => {
+    const newHero: HeroInterface = {
+      id: 0,
+      name: 'Green Lantern',
+      power: 'Willpower',
+      city: 'Sector 2814'
+    };
 
-
-  // it('should be return all heroes function getHeroes',() => {
-  //   const spy = spyOn(service, 'getHeroes');
-  //   service.getHeroes();
-  //   expect(spy).toHaveBeenCalled()
+    service.addHero(newHero);
+    const result = service.getHeroes();
+    const addedHero = result.find(h => h.name === 'Green Lantern');
     
-  // })
+    expect(addedHero).toBeTruthy();
+    expect(addedHero?.id).toBeGreaterThan(0);
+    expect(result.length).toBe(heroes.length + 1);
+  });
+
+  it('should return undefined for unknown hero id', () => {
+    const result = service.getHeroById(999999);
+    expect(result).toBeUndefined();
+  });
+
+   it('should handle case-insensitive queries', () => {
+    const hero = service.getHeroes()[0];
+    const term = hero.name.toUpperCase();
+
+    service.getHeroByQuery(term);
+    const result = service.getHeroes();
+
+    expect(result.some(h => h.name === hero.name)).toBeTrue();
+  });
+
+  it('should filter heroes by name with query', () => {
+    const hero = service.getHeroes()[0];
+    const term = hero.name.slice(0, 3);
+
+    service.getHeroByQuery(term);
+    const result = service.getHeroes();
+
+    expect(result.every(h => h.name.toLowerCase().includes(term.toLowerCase()))).toBeTrue();
+  });
+
+
+
+
 });

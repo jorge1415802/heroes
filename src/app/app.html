@@ -1,4 +1,9 @@
-<app-nav/>
-<section class="main-container">
-  <router-outlet />
-</section>
+@if(loading()) {
+  <app-loading/>
+}
+@else {
+  <app-nav/>
+  <section class="main-container">
+      <router-outlet />
+  </section>
+}

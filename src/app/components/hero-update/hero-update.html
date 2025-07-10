@@ -1,33 +1,56 @@
 <h1>Edicion de heroe</h1>
 <hr>
-<form class="hero-form" [formGroup]="heroForm" (ngSubmit)="updateHero()">
-  <div class="hero-form-fields">
-    <mat-form-field>
-      <mat-label>Nombre del heroe</mat-label>
-      <input matInput formControlName="name">
-      @if(getfieldError('name')) {
-      <mat-error>{{getfieldError('name')}}</mat-error>
-      }
-    </mat-form-field>
-  </div>
-  <div class="hero-form-fields">
-    <mat-form-field>
-      <mat-label>Habilidad del heroe</mat-label>
-      <input matInput formControlName="power">
-      @if(getfieldError('power')) {
-      <mat-error>{{getfieldError('power')}}</mat-error>
-      }
-    </mat-form-field>
-  </div>
-  <div class="hero-form-fields">
-    <mat-form-field>
-      <mat-label>Ciudad</mat-label>
-      <input matInput formControlName="city">
-      @if(getfieldError('city')) {
-      <mat-error>{{getfieldError('city')}}</mat-error>
-      }
-    </mat-form-field>
-  </div>
-</form>
-
-<button matButton="filled" (click)="updateHero()">Actualizar</button>
+<div class="card-container">
+  <mat-card class="custom-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Datos del heroe</mat-card-title>
+    </mat-card-header>
+    <div class="custom-image">
+      <img mat-card-image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp4xg4lXXuxv039dSEo249uQ26W_3d950PPDWK-9RC6jljGgVF-E3uKjlDFzBNmwyzNpQ&usqp=CAU" alt="register-hero-photo"
+        class="image-width">
+    </div>
+    <mat-card-content>
+      <form [formGroup]="heroForm" (ngSubmit)="updateHero()">
+        <mat-grid-list cols="1" rowHeight="100px">
+          <mat-grid-tile>
+            <mat-form-field class="full-width">
+              <mat-label>Nombre del heroe</mat-label>
+              <input matInput formControlName="name" [value]="heroForm.controls['name'].value  | titlecase">
+              @if(getfieldError('name')) {
+              <mat-error>{{getfieldError('name')}}</mat-error>
+              }
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field class="full-width">
+              <mat-label>Habilidad del heroe</mat-label>
+              <input matInput formControlName="power">
+              @if(getfieldError('power')) {
+              <mat-error>{{getfieldError('power')}}</mat-error>
+              }
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field class="full-width">
+              <mat-label>Ciudad</mat-label>
+              <input matInput formControlName="city">
+              @if(getfieldError('city')) {
+              <mat-error>{{getfieldError('city')}}</mat-error>
+              }
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="position-buttons">
+        <div>
+          <button matButton="filled" (click)="updateHero()">Actualizar</button>
+        </div>
+        <div>
+          <button matButton="filled" (click)="cancel()">Cancelar</button>
+        </div>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

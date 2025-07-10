@@ -1,19 +1,20 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { heroes } from '../utils/data';
 import type{ HeroInterface } from '../interfaces/hero.interface';
+import { LoadingService } from './loading.service';
 
 
 @Injectable({providedIn: 'root'})
 export class HeroesService {
-    static deleteHero(deleteHero: any) {
-      throw new Error('Method not implemented.');
-    }
+    // static deleteHero(deleteHero: any) {
+    //   throw new Error('Method not implemented.');
+    // }
+
     private dataHero = signal<HeroInterface[]>(heroes)
     private initDataHero = signal<HeroInterface[]>(heroes)
 
     addHero(hero: HeroInterface) {
-        const currentHeroes = this.dataHero();
-        hero.id = currentHeroes.length + 1; // Assign a new ID
+        hero.id = new Date().getTime() + Math.floor(Math.random() * 9999)
         this.dataHero.update(heroes => [...heroes, hero]);
     }
 
@@ -32,6 +33,7 @@ export class HeroesService {
                 else return element
             })
         })
+        
     }
 
     getHeroById(id : number) {

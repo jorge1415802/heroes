@@ -5,18 +5,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-hero-register',
-  imports: [MatInputModule,MatCardModule,ReactiveFormsModule,MatButtonModule],
+  imports: [MatInputModule,MatCardModule,ReactiveFormsModule,MatButtonModule,TitleCasePipe,MatGridListModule],
   templateUrl: './hero-register.html',
   styleUrl: './hero-register.css'
 })
-export default class HeroUpdate {
+export default class HeroRegister {
 
   private fb = inject(FormBuilder);
   private heroService = inject(HeroesService)
   private router = inject(Router)
+  private loadingService = inject(LoadingService)
 
   heroForm = this.fb.group({
     id : [''],
@@ -50,8 +54,12 @@ export default class HeroUpdate {
       power : this.heroForm.get('power')!.value ?? '',
       city : this.heroForm.get('city')!.value ?? ''
     }
-    console.log(hero)
     this.heroService.addHero(hero)
+    this.loadingService.sendRequest().subscribe();
+    this.cancel()
+  }
+
+  cancel() {
     this.router.navigate(['/'])
   }
 
