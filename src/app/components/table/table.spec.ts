@@ -78,11 +78,6 @@ describe('Table', () => {
     expect(component.heroesService.deleteHero).not.toHaveBeenCalled();
   });
 
-  // it('should navigate to hero-register', () => {
-  //   component.addHero();
-  //   expect(routerSpy.navigate).toHaveBeenCalledWith(['/hero-register']);
-  // });
-
   it('should navigate to hero-update', () => {
     component.updateHero(mockHeroes[1]);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/hero-update', 2]);

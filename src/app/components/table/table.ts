@@ -59,10 +59,6 @@ export default class Table {
     })
   }
 
-  // addHero() {
-  //   this.router.navigate(['/hero-register'])
-  // }
-
   updateHero(hero : HeroInterface) {
     this.router.navigate(['/hero-update',hero.id])
   }
