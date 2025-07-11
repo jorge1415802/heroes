@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component,inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { HeroesService } from '../../services/heroes.service';
@@ -7,7 +7,6 @@ import Table from '../table/table';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { Loading } from "../../shared/loading/loading";
 
 @Component({
   selector: 'app-home',

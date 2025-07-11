@@ -5,13 +5,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { HeroesService } from '../../services/heroes.service';
 import { Router } from '@angular/router';
-import { TitleCasePipe } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LoadingService } from '../../services/loading.service';
+import { InputUppercase } from '../../directives/input-uppercase';
+
 
 @Component({
   selector: 'app-hero-register',
-  imports: [MatInputModule,MatCardModule,ReactiveFormsModule,MatButtonModule,TitleCasePipe,MatGridListModule],
+  imports: [MatInputModule,MatCardModule,ReactiveFormsModule,MatButtonModule,InputUppercase,MatGridListModule],
   templateUrl: './hero-register.html',
   styleUrl: './hero-register.css'
 })

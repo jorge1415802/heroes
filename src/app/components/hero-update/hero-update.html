@@ -15,7 +15,7 @@
           <mat-grid-tile>
             <mat-form-field class="full-width">
               <mat-label>Nombre del heroe</mat-label>
-              <input matInput formControlName="name" [value]="heroForm.controls['name'].value  | titlecase">
+              <input matInput formControlName="name" inputUppercase>
               @if(getfieldError('name')) {
               <mat-error>{{getfieldError('name')}}</mat-error>
               }

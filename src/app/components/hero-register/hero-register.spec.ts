@@ -22,7 +22,7 @@ describe('HeroRegister', () => {
         };
 
         await TestBed.configureTestingModule({
-            imports: [HeroRegister,HttpClientModule],
+            imports: [HeroRegister, HttpClientModule],
             providers: [
                 { provide: HeroesService, useValue: mockHeroService },
                 { provide: Router, useValue: mockRouter },
@@ -69,6 +69,17 @@ describe('HeroRegister', () => {
 
         expect(mockHeroService.addHero).not.toHaveBeenCalled();
         expect(mockRouter.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should convert id to 0 if not a number', () => {
+        component.heroForm.setValue({
+            id: null,
+            name: 'Thor',
+            power: 'Trueno',
+            city: 'Asgard'
+        });
+        component.registerHero();
+        expect(mockHeroService.addHero).toHaveBeenCalledWith(jasmine.objectContaining({ id: 0 }));
     });
 
     it('should navigate to root on cancel', () => {
@@ -120,6 +131,16 @@ describe('HeroRegister', () => {
         expect(component.cancel).toHaveBeenCalled()
     });
 
+    it('should show error message for power field', () => {
+        const control = component.heroForm.get('power');
+        control?.setErrors({ required: true });
+        control?.markAsTouched();
+        fixture.detectChanges();
+
+        const error = fixture.nativeElement.querySelector('mat-error');
+        expect(error?.textContent).toContain('El campo es requerido');
+    });
+
     it('should return required error', () => {
         component.heroForm.get('name')?.setErrors({ required: true });
         expect(component.getfieldError('name')).toBe('El campo es requerido');
@@ -137,5 +158,19 @@ describe('HeroRegister', () => {
 
     it('should return null if control not found', () => {
         expect(component.getfieldError('notAField')).toBeNull();
+    });
+
+    it('should return null if control is not found', () => {
+        expect(component.getfieldError('invalidField')).toBeNull();
+    });
+
+    it('should return null if control has no errors', () => {
+        component.heroForm.get('name')?.setErrors(null);
+        expect(component.getfieldError('name')).toBeNull();
+    });
+
+    it('should return first error message if multiple errors exist', () => {
+        component.heroForm.get('name')?.setErrors({ required: true, pattern: true });
+        expect(component.getfieldError('name')).toBe('El campo es requerido');
     });
 });

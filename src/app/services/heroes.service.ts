@@ -1,15 +1,11 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { heroes } from '../utils/data';
 import type{ HeroInterface } from '../interfaces/hero.interface';
-import { LoadingService } from './loading.service';
 
 
 @Injectable({providedIn: 'root'})
 export class HeroesService {
-    // static deleteHero(deleteHero: any) {
-    //   throw new Error('Method not implemented.');
-    // }
-
+    
     private dataHero = signal<HeroInterface[]>(heroes)
     private initDataHero = signal<HeroInterface[]>(heroes)
 

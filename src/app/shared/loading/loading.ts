@@ -1,6 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component} from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { LoadingService } from '../../services/loading.service';
 
 
 @Component({

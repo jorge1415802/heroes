@@ -8,13 +8,13 @@ import { HeroInterface } from '../../interfaces/hero.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { TitleCasePipe } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LoadingService } from '../../services/loading.service';
+import { InputUppercase } from '../../directives/input-uppercase';
 
 @Component({
   selector: 'app-hero-update',
-  imports: [MatInputModule,MatCardModule,ReactiveFormsModule,MatButtonModule,TitleCasePipe,MatGridListModule],
+  imports: [MatInputModule,MatCardModule,ReactiveFormsModule,MatButtonModule,InputUppercase,MatGridListModule],
   templateUrl: './hero-update.html',
   styleUrl: './hero-update.css'
 })
